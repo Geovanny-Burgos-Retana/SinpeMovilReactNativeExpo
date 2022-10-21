@@ -7,6 +7,7 @@ const accountId = '8620317d-9051-4a2c-922c-cfbeabbcf768';
 const urlApi = 'https://ucszxe1fz2.execute-api.us-west-2.amazonaws.com/account';
 var records = 10;
 var page = 0;
+var init = true;
 
 var DATA = [
     {
@@ -44,33 +45,44 @@ const Item = ({ title }) => (
     </View>
 );
 
+const getMoreMovementsDB = () => {
+    return fetch(urlApi + '/' + accountId + '?records=' + records + '&offset=' + page)
+        .then((response) => response.json())
+        .then((json) => {
+            return json;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+};
+
 export default function Movements() {
     const [isLoading, setLoading] = useState(true);
     const [account, setAccount] = useState({});
+    const [movements, setMovements] = useState([]);
+
 
     const getAccount = async () => {
         try {
-            const response = await fetch(urlApi + '/' + accountId + '?records=' + records + '&page=' + page);
+            const response = await fetch(urlApi + '/' + accountId + '?records=' + records + '&offset=' + page);
+            console.log(urlApi + '/' + accountId + '?records=' + records + '&offset=' + page);
             const json = await response.json();
+            console.log("BEFORE");
+            console.log(JSON.stringify(movements));
+            console.log(movements.length);
             setAccount(json.account);
+            setMovements([...movements, ...json.account.banking_movements]);
+            page = page + 1;
         } catch (error) {
             console.error(error);
         } finally {
             setLoading(false);
         }
     }
-   
+
     useEffect(() => {
         getAccount();
     }, []);
-
-    const fetchData = () => {
-        getMoreMovements();
-    };
-
-    const onRefresh = () => {
-        fetchData();
-    };
     
     const renderItem = ({ item }) => (
         <Item title={item.id} />
@@ -83,29 +95,29 @@ export default function Movements() {
     };
 
     const getMoreMovements = () => {
-        var idNew = uuid.v4();
-        console.log(idNew);
-        for (let i = 0; i < 5; i++) {
-            var newMovement = {
-                id: idNew
-            };
-            movements.push(newMovement);
-        }
         console.log("Obtener más movimientos!");
-        console.log(JSON.stringify(movements, null, 2));
+
+        if(init) {
+            getAccount();
+        }
+        init = false;
+        
+        console.log("Obtener más movimientos!");
+        console.log("AFTER");
+        console.log(JSON.stringify(movements));
         console.log(movements.length);
     };
 
     return (
         <SafeAreaView style={styles.container}>
             <FlatList nestedScrollEnabled
-                data={account.banking_movements}
-                extraData={account.banking_movements}
+                data={movements}
+                extraData={movements}
                 renderItem={renderItem}
-                progressViewOffset={100}
+                progressViewOffset={10}
                 onScroll={({nativeEvent}) => {
                     if (isCloseToBottom(nativeEvent)) {
-                        onRefresh();
+                        getMoreMovements();
                     }
                 }}
             />
