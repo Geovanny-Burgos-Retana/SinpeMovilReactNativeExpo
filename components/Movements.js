@@ -1,7 +1,12 @@
-import { StyleSheet, FlatList, View, StatusBar, SafeAreaView, Text, Animated } from "react-native";
+import { StyleSheet, FlatList, View, StatusBar, SafeAreaView, Text } from "react-native";
 import Movement from "./Movement";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import uuid from 'react-native-uuid';
+
+const accountId = '8620317d-9051-4a2c-922c-cfbeabbcf768';
+const urlApi = 'https://ucszxe1fz2.execute-api.us-west-2.amazonaws.com/account';
+var records = 10;
+var page = 0;
 
 var DATA = [
     {
@@ -40,8 +45,24 @@ const Item = ({ title }) => (
 );
 
 export default function Movements() {
+    const [isLoading, setLoading] = useState(true);
+    const [account, setAccount] = useState({});
 
-    const [movements, setMovements] = useState(DATA);
+    const getAccount = async () => {
+        try {
+            const response = await fetch(urlApi + '/' + accountId + '?records=' + records + '&page=' + page);
+            const json = await response.json();
+            setAccount(json.account);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+   
+    useEffect(() => {
+        getAccount();
+    }, []);
 
     const fetchData = () => {
         getMoreMovements();
@@ -54,10 +75,6 @@ export default function Movements() {
     const renderItem = ({ item }) => (
         <Item title={item.id} />
     );
-
-    const handleScroll = (event) => {
-        console.log(event.nativeEvent.contentOffset.y);
-    };
 
     const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
         const paddingToBottom = 20;
@@ -82,8 +99,8 @@ export default function Movements() {
     return (
         <SafeAreaView style={styles.container}>
             <FlatList nestedScrollEnabled
-                data={movements}
-                extraData={movements}
+                data={account.banking_movements}
+                extraData={account.banking_movements}
                 renderItem={renderItem}
                 progressViewOffset={100}
                 onScroll={({nativeEvent}) => {

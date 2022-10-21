@@ -7,21 +7,6 @@ var records = 10;
 var page = 0;
 
 const getAccount = async () => {
-  /*return fetch(urlApi + '/' + accountId + '?records=' + records + '&page=' + page, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }
-  })
-    .then((response) => response.json())
-    .then((json) => {
-      return json;
-    })
-    .catch((error) => {
-      console.error(error);
-    });*/
-
     const response = await fetch(urlApi + '/' + accountId + '?records=' + records + '&page=' + page);
     const json = await response.json();
     return json.account;
