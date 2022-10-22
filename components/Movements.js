@@ -9,36 +9,6 @@ var records = 10;
 var page = 0;
 var init = true;
 
-var DATA = [
-    {
-        id: "1"
-    },
-    {
-        id: "2"
-    },
-    {
-        id: "3"
-    },
-    {
-        id: "4"
-    },
-    {
-        id: "5"
-    },
-    {
-        id: "6"
-    },
-    {
-        id: "7"
-    },
-    {
-        id: "8"
-    },
-    {
-        id: "9"
-    }
-];
-
 const Item = ({ movement }) => (
     <View style={styles.item}>
         <Movement movement={movement}></Movement>
@@ -61,31 +31,58 @@ export default function Movements() {
     const [account, setAccount] = useState({});
     const [movements, setMovements] = useState([
         {
-            id: "1"
+            id: "1",
+            createdAt: 1666327751000,
+            amount: 1000,
+            contact: "Andrea Burgos"
         },
         {
-            id: "2"
+            id: "2",
+            createdAt: 1666327751000,
+            amount: 2000,
+            contact: "Marlen Retana"
         },
         {
-            id: "3"
+            id: "3",
+            createdAt: 1666327751000,
+            amount: 3000,
+            contact: "María Centeno"
         },
         {
-            id: "4"
+            id: "4",
+            createdAt: 1666327751000,
+            amount: 4000,
+            contact: "Katia Hidalgo"
         },
         {
-            id: "5"
+            id: "5",
+            createdAt: 1666327751000,
+            amount: 5000,
+            contact: "Natalia Montoya"
         },
         {
-            id: "6"
+            id: "6",
+            createdAt: 1666327751000,
+            amount: 6000,
+            contact: "Arelys Mejía"
         },
         {
-            id: "7"
+            id: "7",
+            createdAt: 1666327751000,
+            amount: 7000,
+            contact: "Julio Arley"
         },
         {
-            id: "8"
+            id: "8",
+            createdAt: 1666327751000,
+            amount: 8000,
+            contact: "Mauricio Madrigal"
         },
         {
-            id: "9"
+            id: "9",
+            createdAt: 1666327751000,
+            amount: 9000,
+            contact: "Adelia Martinez"
         }
     ]);
 
@@ -162,22 +159,28 @@ const styles = StyleSheet.create({
     container: {
         width: 375,
         height: 362,
-        top: 414
+        top: 214
     },
     item: {
-        backgroundColor: '#f9c2ff',
-        padding: 20,
-        marginVertical: 8,
+        /* backgroundColor: '#f9c2ff', */
+        padding: 10,
+        marginVertical: 0,
     },
     title: {
         fontSize: 32,
     },
     movements: {
-        color: "#3E3E3E",
-        fontSize: 32
+        /* Title/H5 */
+        fontStyle: "normal",
+        fontWeight: "700",
+        fontSize: 20,
+        lineHeight: 26,
+        letterSpacing: 0.0022,
+        /* Text-color/Default */
+        color: "#3E3E3E"
     },
     view2: {
-        backgroundColor: "blue"
+        padding: 10
     },
     view3: {
         backgroundColor: "yellow"
