@@ -1,4 +1,4 @@
-import { StyleSheet, FlatList, View, StatusBar, SafeAreaView, Text } from "react-native";
+import { StyleSheet, FlatList, View, SafeAreaView, Text, TouchableHighlight } from "react-native";
 import Movement from "./Movement";
 import React, { useState } from "react";
 
@@ -15,7 +15,10 @@ export default function Movements(props) {
     const [movements, setMovements] = useState(props.movements);
     
     const renderItem = ({ item }) => (
-        <Item movement={item} />
+        <TouchableHighlight onPress={() => props.navigation.navigate('MovementDetails', { movement: item })}>
+            <Item movement={item} />
+        </TouchableHighlight>
+        
     );
 
     const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
@@ -34,7 +37,7 @@ export default function Movements(props) {
         
             const result = await response.json();
         
-            console.log('result is: ', JSON.stringify(result, null, 4));
+            // console.log('result is: ', JSON.stringify(result, null, 4));
         
             setMovements([...movements, ...result.account.banking_movements]);
 

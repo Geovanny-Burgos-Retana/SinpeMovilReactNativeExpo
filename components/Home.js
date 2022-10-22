@@ -3,7 +3,7 @@ import Movements from "./Movements";
 import React, { useState, useEffect } from "react";
 import AppLoading from 'expo-app-loading';
 
-export default function Home() {
+export default function Home(props) {
   const [data, setData] = useState();
   let [isLoading, setIsLoading] = useState(false);
   let [isReady, setIsReady] = useState(false);
@@ -21,7 +21,7 @@ export default function Home() {
 
       const result = await response.json();
 
-      console.log('result is: ', JSON.stringify(result, null, 4));
+      // console.log('result is: ', JSON.stringify(result, null, 4));
 
       setData(result);
 
@@ -49,8 +49,6 @@ export default function Home() {
     return <AppLoading />
   }
 
-  console.log(data);
-
   return (
     <View isReady = {false}>
       <StatusBar></StatusBar>
@@ -71,7 +69,7 @@ export default function Home() {
           onPress={<Text></Text>}
         />
       </View>
-      <Movements movements={data.account.banking_movements}></Movements>
+      <Movements movements={data.account.banking_movements} navigation={props.navigation}></Movements>
     </View>
   );
 }

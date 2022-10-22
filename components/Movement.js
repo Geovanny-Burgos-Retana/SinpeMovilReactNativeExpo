@@ -1,8 +1,6 @@
 import { StyleSheet, View, Text } from "react-native";
-import React, { useState } from "react";
 
 export default function Movement(props) {
-    console.log(props.movement);
     return (
         <View style={styles.container}>
             <View style={styles.container2}>
