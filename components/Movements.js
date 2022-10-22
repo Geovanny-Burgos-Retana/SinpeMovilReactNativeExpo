@@ -1,13 +1,9 @@
 import { StyleSheet, FlatList, View, StatusBar, SafeAreaView, Text } from "react-native";
 import Movement from "./Movement";
-import React, { useState, useEffect } from "react";
-import uuid from 'react-native-uuid';
+import React, { useState } from "react";
 
-const accountId = '8620317d-9051-4a2c-922c-cfbeabbcf768';
-const urlApi = 'https://ucszxe1fz2.execute-api.us-west-2.amazonaws.com/account';
 var records = 10;
 var page = 1;
-var init = true;
 
 const Item = ({ movement }) => (
     <View style={styles.container2}>
@@ -15,43 +11,8 @@ const Item = ({ movement }) => (
     </View>
 );
 
-const getMoreMovementsDB = () => {
-    return fetch(urlApi + '/' + accountId + '?records=' + records + '&offset=' + page)
-        .then((response) => response.json())
-        .then((json) => {
-            return json;
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-};
-
 export default function Movements(props) {
-    const [isLoading, setLoading] = useState(true);
-    const [account, setAccount] = useState({});
     const [movements, setMovements] = useState(props.movements);
-
-    /*const getAccount = async () => {
-        try {
-            const response = await fetch(urlApi + '/' + accountId + '?records=' + records + '&offset=' + page);
-            console.log(urlApi + '/' + accountId + '?records=' + records + '&offset=' + page);
-            const json = await response.json();
-            console.log("BEFORE");
-            console.log(JSON.stringify(movements));
-            console.log(movements.length);
-            setAccount(json.account);
-            setMovements([...movements, ...json.account.banking_movements]);
-            page = page + 1;
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    useEffect(() => {
-        getAccount();
-    }, []);*/
     
     const renderItem = ({ item }) => (
         <Item movement={item} />
@@ -63,18 +24,25 @@ export default function Movements(props) {
             contentSize.height - paddingToBottom;
     };
 
-    const getMoreMovements = () => {
-        console.log("Obtener más movimientos!");
-
-        if(init) {
-            getAccount();
-        }
-        init = false;
+    const fetchApiAccount = async () => {
+        try {
+            const response = await fetch('https://ucszxe1fz2.execute-api.us-west-2.amazonaws.com/account/8620317d-9051-4a2c-922c-cfbeabbcf768?records=' + records + '&offset=' + page);
         
-        console.log("Obtener más movimientos!");
-        console.log("AFTER");
-        console.log(JSON.stringify(movements));
-        console.log(movements.length);
+            if (!response.ok) {
+                throw new Error(`Error! status: ${response.status}`);
+            }
+        
+            const result = await response.json();
+        
+            console.log('result is: ', JSON.stringify(result, null, 4));
+        
+            setMovements([...movements, ...result.account.banking_movements]);
+
+            page = page + 1;
+    
+        } catch (err) {
+            setErr(err.message);
+        }
     };
 
     return (
@@ -90,7 +58,7 @@ export default function Movements(props) {
                     progressViewOffset={10}
                     onScroll={({nativeEvent}) => {
                         if (isCloseToBottom(nativeEvent)) {
-                            //getMoreMovements();
+                            fetchApiAccount();
                         }
                     }}
                 />
