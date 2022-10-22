@@ -1,27 +1,17 @@
 import { StatusBar, View, Text, StyleSheet, Button } from "react-native";
 import Movements from "./Movements";
-import React, { useState } from "react";
-
-const fetchApiCall = () => {
-  fetch("https://ucszxe1fz2.execute-api.us-west-2.amazonaws.com/account/8620317d-9051-4a2c-922c-cfbeabbcf768?records=10&offset=0")
-    .then(response => response.json())
-    .then(response => {
-      setQuote(response.content);
-      setSource(response.originator.name)
-    })
-    .catch(err => {
-      console.log(err);
-    });
-}
-
+import React, { useState, useEffect } from "react";
+import AppLoading from 'expo-app-loading';
 
 export default function Home() {
   const [data, setData] = useState();
-  const [isLoading, setIsLoading] = useState(false);
+  let [isLoading, setIsLoading] = useState(false);
+  let [isReady, setIsReady] = useState(false);
   const [err, setErr] = useState('');
 
-  const fetchApiAccount = async () => {
+  let fetchApiAccount = async () => {
     setIsLoading(true);
+    var jsonResponse = null;
     try {
       const response = await fetch("https://ucszxe1fz2.execute-api.us-west-2.amazonaws.com/account/8620317d-9051-4a2c-922c-cfbeabbcf768?records=10&offset=0");
       
@@ -35,21 +25,38 @@ export default function Home() {
 
       setData(result);
 
+      jsonResponse = result;
+
     } catch (err) {
       setErr(err.message);
     } finally {
       setIsLoading(false);
     }
+    return Promise.all(jsonResponse);
   };
+
+  useEffect(() => {
+    const loadResources = async () => {
+      await fetchApiAccount();
+      setIsReady(true);
+    };
+
+    loadResources();
+  }, []);
+
+    
+  if(!isReady) {
+    return <AppLoading />
+  }
 
   console.log(data);
 
   return (
-    <View>
+    <View isReady = {false}>
       <StatusBar></StatusBar>
       <Text style={styles.wallet}>Cuenta Colones</Text>
       <Text style={styles.balance}>Saldo disponible</Text>
-      <Text style={styles.amount}>$36,000.00</Text>
+      <Text style={styles.amount}>${data.account.amount}</Text>
       <Text style={styles.balance}>¿Qué querés hacer?</Text>
       <View>
         <View>
@@ -59,12 +66,12 @@ export default function Home() {
           SINPE
           móvil
         </Text>
+        <Button
+          title="Make Sinpe!!"
+          onPress={<Text></Text>}
+        />
       </View>
       <Movements></Movements>
-      <Button
-        title="Make Request!!"
-        onPress={fetchApiAccount}
-      />
     </View>
   );
 }
