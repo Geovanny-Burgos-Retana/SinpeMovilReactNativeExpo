@@ -39,9 +39,9 @@ var DATA = [
     }
 ];
 
-const Item = ({ title }) => (
+const Item = ({ movement }) => (
     <View style={styles.item}>
-        <Text style={styles.title}>{title}</Text>
+        <Movement movement={movement}></Movement>
     </View>
 );
 
@@ -59,10 +59,37 @@ const getMoreMovementsDB = () => {
 export default function Movements() {
     const [isLoading, setLoading] = useState(true);
     const [account, setAccount] = useState({});
-    const [movements, setMovements] = useState([]);
+    const [movements, setMovements] = useState([
+        {
+            id: "1"
+        },
+        {
+            id: "2"
+        },
+        {
+            id: "3"
+        },
+        {
+            id: "4"
+        },
+        {
+            id: "5"
+        },
+        {
+            id: "6"
+        },
+        {
+            id: "7"
+        },
+        {
+            id: "8"
+        },
+        {
+            id: "9"
+        }
+    ]);
 
-
-    const getAccount = async () => {
+    /*const getAccount = async () => {
         try {
             const response = await fetch(urlApi + '/' + accountId + '?records=' + records + '&offset=' + page);
             console.log(urlApi + '/' + accountId + '?records=' + records + '&offset=' + page);
@@ -82,10 +109,10 @@ export default function Movements() {
 
     useEffect(() => {
         getAccount();
-    }, []);
+    }, []);*/
     
     const renderItem = ({ item }) => (
-        <Item title={item.id} />
+        <Item movement={item} />
     );
 
     const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
@@ -110,17 +137,22 @@ export default function Movements() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <FlatList nestedScrollEnabled
-                data={movements}
-                extraData={movements}
-                renderItem={renderItem}
-                progressViewOffset={10}
-                onScroll={({nativeEvent}) => {
-                    if (isCloseToBottom(nativeEvent)) {
-                        getMoreMovements();
-                    }
-                }}
-            />
+            <View style={styles.view2}>
+                <Text style={styles.movements}>Movimientos</Text>
+            </View>
+            <View>
+                <FlatList nestedScrollEnabled
+                    data={movements}
+                    extraData={movements}
+                    renderItem={renderItem}
+                    progressViewOffset={10}
+                    onScroll={({nativeEvent}) => {
+                        if (isCloseToBottom(nativeEvent)) {
+                            //getMoreMovements();
+                        }
+                    }}
+                />
+            </View>
         </SafeAreaView>
     );
 };
@@ -128,22 +160,26 @@ export default function Movements() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    container2: {
-        flex: 1,
-        marginTop: StatusBar.currentHeight || 0,
+        width: 375,
+        height: 362,
+        top: 414
     },
     item: {
         backgroundColor: '#f9c2ff',
         padding: 20,
         marginVertical: 8,
-        marginHorizontal: 16,
     },
     title: {
         fontSize: 32,
     },
+    movements: {
+        color: "#3E3E3E",
+        fontSize: 32
+    },
+    view2: {
+        backgroundColor: "blue"
+    },
+    view3: {
+        backgroundColor: "yellow"
+    }
 });

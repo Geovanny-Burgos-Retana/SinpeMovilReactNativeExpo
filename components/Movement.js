@@ -1,12 +1,11 @@
 import { StyleSheet, View, Text } from "react-native";
-import { useState } from "react";
+import React, { useState } from "react";
 
-export default function Movement() {
-    const [titleText, setTitleText] = useState("Movement Item");  
+export default function Movement(props) {
     return (
         <View style={styles.container}>
             <View style={styles.container2}>
-                <Text>SINPE móvil - Contacto</Text>
+                <Text>SINPE móvil - Contacto {props.movement.id}</Text>
                 <Text>Fecha</Text>
             </View>
             <View style={styles.container2}>
