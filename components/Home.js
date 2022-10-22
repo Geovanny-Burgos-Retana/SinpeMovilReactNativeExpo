@@ -56,7 +56,7 @@ export default function Home() {
       <StatusBar></StatusBar>
       <Text style={styles.wallet}>Cuenta Colones</Text>
       <Text style={styles.balance}>Saldo disponible</Text>
-      <Text style={styles.amount}>${data.account.amount}</Text>
+      <Text style={styles.amount}>₡{data.account.amount}</Text>
       <Text style={styles.balance}>¿Qué querés hacer?</Text>
       <View>
         <View>
@@ -71,7 +71,7 @@ export default function Home() {
           onPress={<Text></Text>}
         />
       </View>
-      <Movements></Movements>
+      <Movements movements={data.account.banking_movements}></Movements>
     </View>
   );
 }

@@ -29,62 +29,7 @@ const getMoreMovementsDB = () => {
 export default function Movements(props) {
     const [isLoading, setLoading] = useState(true);
     const [account, setAccount] = useState({});
-    const [movements, setMovements] = useState([
-        {
-            id: "1",
-            createdAt: 1666327751000,
-            amount: 1000,
-            contact: "Andrea Burgos"
-        },
-        {
-            id: "2",
-            createdAt: 1666327751000,
-            amount: 2000,
-            contact: "Marlen Retana"
-        },
-        {
-            id: "3",
-            createdAt: 1666327751000,
-            amount: 3000,
-            contact: "María Centeno"
-        },
-        {
-            id: "4",
-            createdAt: 1666327751000,
-            amount: 4000,
-            contact: "Katia Hidalgo"
-        },
-        {
-            id: "5",
-            createdAt: 1666327751000,
-            amount: 5000,
-            contact: "Natalia Montoya"
-        },
-        {
-            id: "6",
-            createdAt: 1666327751000,
-            amount: 6000,
-            contact: "Arelys Mejía"
-        },
-        {
-            id: "7",
-            createdAt: 1666327751000,
-            amount: 7000,
-            contact: "Julio Arley"
-        },
-        {
-            id: "8",
-            createdAt: 1666327751000,
-            amount: 8000,
-            contact: "Mauricio Madrigal"
-        },
-        {
-            id: "9",
-            createdAt: 1666327751000,
-            amount: 9000,
-            contact: "Adelia Martinez"
-        }
-    ]);
+    const [movements, setMovements] = useState(props.movements);
 
     /*const getAccount = async () => {
         try {
@@ -153,7 +98,6 @@ export default function Movements(props) {
         </SafeAreaView>
     );
 };
-
 
 const styles = StyleSheet.create({
     container: {

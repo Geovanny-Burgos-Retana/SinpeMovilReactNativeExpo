@@ -10,7 +10,7 @@ export default function Movement(props) {
                 <Text style={styles.date}>{props.movement.createdAt}</Text>
             </View>
             <View style={styles.container3}>
-                <Text style={styles.amount}>- $ {props.movement.amount}</Text>
+                <Text style={styles.amount}>- ₡ {props.movement.amount}</Text>
                 <Text></Text>
             </View>
         </View>
