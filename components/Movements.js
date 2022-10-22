@@ -6,7 +6,7 @@ import uuid from 'react-native-uuid';
 const accountId = '8620317d-9051-4a2c-922c-cfbeabbcf768';
 const urlApi = 'https://ucszxe1fz2.execute-api.us-west-2.amazonaws.com/account';
 var records = 10;
-var page = 0;
+var page = 1;
 var init = true;
 
 const Item = ({ movement }) => (
@@ -102,7 +102,7 @@ export default function Movements(props) {
 const styles = StyleSheet.create({
     container: {
         width: 375,
-        height: 362,
+        height: 270,
         top: 214
     },
     container2: {

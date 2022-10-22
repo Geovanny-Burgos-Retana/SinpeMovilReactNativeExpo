@@ -56,7 +56,7 @@ export default function Home() {
       <StatusBar></StatusBar>
       <Text style={styles.wallet}>Cuenta Colones</Text>
       <Text style={styles.balance}>Saldo disponible</Text>
-      <Text style={styles.amount}>₡{data.account.amount}</Text>
+      <Text style={styles.amount}>₡{parseInt(data.account.amount).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</Text>
       <Text style={styles.balance}>¿Qué querés hacer?</Text>
       <View>
         <View>
