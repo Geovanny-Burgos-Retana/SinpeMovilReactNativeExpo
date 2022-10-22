@@ -10,7 +10,7 @@ var page = 0;
 var init = true;
 
 const Item = ({ movement }) => (
-    <View style={styles.item}>
+    <View style={styles.container2}>
         <Movement movement={movement}></Movement>
     </View>
 );
@@ -26,7 +26,7 @@ const getMoreMovementsDB = () => {
         });
 };
 
-export default function Movements() {
+export default function Movements(props) {
     const [isLoading, setLoading] = useState(true);
     const [account, setAccount] = useState({});
     const [movements, setMovements] = useState([
@@ -134,7 +134,7 @@ export default function Movements() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.view2}>
+            <View style={styles.container2}>
                 <Text style={styles.movements}>Movimientos</Text>
             </View>
             <View>
@@ -161,13 +161,8 @@ const styles = StyleSheet.create({
         height: 362,
         top: 214
     },
-    item: {
-        /* backgroundColor: '#f9c2ff', */
-        padding: 10,
-        marginVertical: 0,
-    },
-    title: {
-        fontSize: 32,
+    container2: {
+        padding: 10
     },
     movements: {
         /* Title/H5 */
@@ -178,11 +173,5 @@ const styles = StyleSheet.create({
         letterSpacing: 0.0022,
         /* Text-color/Default */
         color: "#3E3E3E"
-    },
-    view2: {
-        padding: 10
-    },
-    view3: {
-        backgroundColor: "yellow"
     }
 });
