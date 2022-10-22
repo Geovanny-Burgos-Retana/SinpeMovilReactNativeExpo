@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Button, TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function MovementDetails(props) {
@@ -6,20 +6,102 @@ export default function MovementDetails(props) {
 
     return (
         <View>
-            <Text>Icon iniciales nombre</Text>
-            <Text>SINPE móvil - {props.route.params.movement.contact}</Text>
-            <Text>₡{parseInt(props.route.params.movement.amount).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</Text>
-            <Text>Fecha</Text>
-            <Text>{props.route.params.movement.createdAt}</Text>
-            <Text>Descripción</Text>
-            <Text>Fiesta de Hallowink</Text>
-            <Text>Tipo de movimiento</Text>
-            <Text>SINPE móvil</Text>
-            <Text></Text>
+            <View>
+                <Text>Icon iniciales nombre</Text>
+            </View>
+            <Text style={styles.title}>SINPE móvil - {props.route.params.movement.contact}</Text>
+            <Text style={styles.amount}>₡{parseInt(props.route.params.movement.amount).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</Text>
+            <View style={styles.container}>
+                <Text style={styles.dateTitle}>Fecha</Text>
+                <Text style={styles.date}>{props.route.params.movement.createdAt}</Text>
+                <Text style={styles.dateTitle}>Descripción</Text>
+                <Text style={styles.date}>Fiesta de Hallowink</Text>
+                <Text style={styles.dateTitle}>Tipo de movimiento</Text>
+                <Text style={styles.date}>SINPE móvil</Text>
+            </View>
+            <TouchableOpacity onPress={() => props.navigation.navigate('Home')} style={styles.backButton}>
+                <Text style={styles.backText}>Volver</Text>
+            </TouchableOpacity>
+            
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    
+    container: {
+        /* Auto layout */
+        /* display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        padding: 0,
+        gap: 16,
+
+        position: "absolute",
+        width: 375,
+        height: 224,
+        left: 0,
+        top: 280 */
+    },  
+    title: {
+        /* Body/Regular */
+        fontStyle: "normal",
+        fontWeight: "400",
+        fontSize: 14,
+        lineHeight: 19,
+        display: "flex",
+        alignItems: "center",
+        textAlign: "center",
+        /* Text-color/Default */
+        color: "#3E3E3E"
+    },
+    amount: {
+        /* Body/Regular */
+        fontStyle: "normal",
+        fontWeight: "700",
+        fontSize: 22,
+        lineHeight: 29,
+        fontWeight: 'bold',
+        display: "flex",
+        alignItems: "center",
+        textAlign: "center",
+        /* Semantic/Error */
+        color: '#3E3E3E'
+    },
+    dateTitle: {
+        /* Body/Regular */
+        fontStyle: "normal",
+        fontWeight: "400",
+        fontSize: 12,
+        lineHeight: 16,
+        /* Text-color/Default */
+        color: '#787878',
+    },
+    date: {
+        /* Body/Regular */
+        fontStyle: "normal",
+        fontWeight: "400",
+        fontSize: 14,
+        lineHeight: 19,
+        /* Text-color/Default */
+        color: '#3E3E3E',
+    },
+    backButton: {
+        backgroundColor:"#4C51F7",
+        borderRadius: 24,
+        margin:10
+    },
+    backText: {
+        /* action */
+        padding:10,
+        /* Body/Regular */
+        fontStyle: "normal",
+        fontWeight: "700",
+        fontSize: 16,
+        lineHeight: 21,
+        display: "flex",
+        alignItems: "center",
+        textAlign: "center",
+        /* Text-color/Default */
+        color: '#FFFFFF',
+    }
 });

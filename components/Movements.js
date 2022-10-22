@@ -15,7 +15,7 @@ export default function Movements(props) {
     const [movements, setMovements] = useState(props.movements);
     
     const renderItem = ({ item }) => (
-        <TouchableHighlight onPress={() => props.navigation.navigate('MovementDetails', { movement: item })}>
+        <TouchableHighlight onPress={() => props.navigation.navigate('MovementDetails', { movement: item, navigation: props.navigation })}>
             <Item movement={item} />
         </TouchableHighlight>
         
