@@ -1,64 +1,67 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TextInput } from 'react-native';
 import SectionListContacts from 'react-native-sectionlist-contacts';
-import * as Contacts from 'expo-contacts';
-
 
 export default function ContactList(props) {
-    const [dataArray, setDataArray] = useState([/* {
-            "lookupKey": "2375i5aef24c28cb4a1be.3789r596-293F53294B45294B295929414545533943.2399r603-293F53294B45294B295929414545533943",
-            "firstname": "Álvaro",
-            "name": "Alvaro Araya Moovin",
-            "id": "597",
-            "imageAvailable": false,
-            "middleName": "Araya",
-            "contactType": "person",
-            "lastname": "Moovin"
+    const [dataArray, setDataArray] = useState([
+        {
+          name: 'Anderson',
+          firstname: 'Bill',
+          lastname: 'Anderson',
         },
         {
-            "lookupKey": "2375i24173f8d8b44c3c7.3789r646-2D294B3F394337454D2D452D",
-            "firstname": "☆Carlinhos☆ ⚔️",
-            "name": "☆Carlinhos☆ ⚔️ COC ⚔️",
-            "id": "648",
-            "imageAvailable": false,
-            "middleName": "COC",
-            "contactType": "person",
-            "lastname": "⚔️"
+          name: 'Aaron',
+          firstname: 'Milton',
+          lastname: 'Aaron',
         },
         {
-            "lookupKey": "2375i7101182e0ec79e5d.3789r616-3D31593F454B2D452D",
-            "firstname": "🍃Keylor🍃",
-            "name": "🍃Keylor🍃 COC",
-            "id": "617",
-            "imageAvailable": false,
-            "contactType": "person",
-            "lastname": "COC"
-        } */
-    ]);
-
-    useEffect(() => {
-        (async () => {
-          const { status } = await Contacts.requestPermissionsAsync();
-          if (status === "granted") {
-            const { data } = await Contacts.getContactsAsync({
-              fields: [ Contacts.Fields.FirstName, Contacts.Fields.LastName/* , Contacts.Fields.PhoneNumbers */]
-            });
-    
-            if (data.length > 0) {
-              data.forEach(element => {
-                element["firstname"] = element["firstName"];
-                element["lastname"] = element["lastName"];
-              });
-              setDataArray(data);
-              setIsReady(true);
-            } else {
-              setError("No contacts found");
-            }
-          } else {
-            setError("Permission to access contacts denied.");
-          }
-        })();
-      }, []);
+          name: 'Alex',
+          firstname: 'Michale',
+          lastname: 'Alex',
+        },
+        {
+          name: 'Baarda',
+          firstname: 'Will',
+          lastname: 'Baarda',
+        },
+        {
+          name: 'Ballard',
+          firstname: 'Bruce',
+          lastname: 'Ballard',
+        },
+        {
+          name: 'Barlow',
+          firstname: 'Michael',
+          lastname: 'Barlow',
+        },
+        {
+          name: 'Haro',
+          firstname: 'Anna',
+          lastname: 'Haro',
+        },
+        {
+          name: 'Calvin',
+          firstname: 'David',
+          lastname: 'Calvin',
+        },
+        {
+          name: 'David',
+          firstname: 'Carl',
+          lastname: 'David',
+        },
+        {
+          name: 'Elaine',
+          firstname: 'Mary',
+          lastname: 'Elaine',
+        },
+        {
+          name: 'Felix',
+          firstname: 'David',
+          lastname: 'Felix',
+        },
+        { name: '**&&&&', firstname: '**', lastname: '&&&&' },
+        { name: '1122', firstname: '11', lastname: '22' },
+      ]);
     
     const _renderHeader = (params) => {
         return (
@@ -79,38 +82,65 @@ export default function ContactList(props) {
         );
       };
 
-    
-
     return (
-    <View style={styles.container}>
-        <View style={{ height: 65, backgroundColor: '#161616' }}>
-            <View style={styles.searchBox}>
-                <Image
-                    source={require('../assets/Search.png')}
-                    style={{ marginLeft: 7, marginRight: 7 }}
-                />
-                <TextInput
-                    placeholder="Search"
-                    placeholderTextColor="#8E8E93"
-                    style={styles.inputText}
-                    returnKeyType="search"
-                    keyboardAppearance="dark"
-                    onChangeText={(text) => {}}
-                ></TextInput>
-            </View>
+        <View style={styles.container}>
+        <View style={{ height: 200, backgroundColor: '#161616' }}>
+          <View style={styles.headerView}>
+            <Text style={styles.groupsText}>Groups</Text>
+            <Image
+              source={require('../assets/Add_Action.png')}
+            />
+          </View>
+          <View style={styles.headerContactsView}>
+            <Text style={styles.headerContacts}>Contacts</Text>
+          </View>
+          <View style={styles.searchBox}>
+            <Image
+              source={require('../assets/Search.png')}
+              style={{ marginLeft: 7, marginRight: 7 }}
+            />
+            <TextInput
+              placeholder="Search"
+              placeholderTextColor="#8E8E93"
+              style={styles.inputText}
+              returnKeyType="search"
+              keyboardAppearance="dark"
+              onChangeText={(text) => {}}
+            ></TextInput>
+          </View>
+        </View>
+        <View
+          style={{
+            height: 80,
+            backgroundColor: '#000000',
+            flexDirection: 'row',
+          }}
+        >
+          <Image
+            source={require('../assets/Userpic.png')}
+            style={styles.avatar}
+          />
+          <View
+            style={{
+              marginLeft: 15,
+              alignItems: 'flex-start',
+              justifyContent: 'center',
+            }}
+          >
+            <Text style={styles.accountText}>Luther Wilson</Text>
+            <Text style={styles.introText}>My Card</Text>
+          </View>
         </View>
         <View style={styles.container}>
-            <SectionListContacts
-                sectionListData={dataArray}
-                initialNumToRender={dataArray.length}
-                SectionListClickCallback={() => props.navigation.navigate('CreateMovement')}
-                showAlphabet={false}
-                otherAlphabet="#"
-                renderHeader={_renderHeader}
-                renderItem={_renderItem}
-                letterViewStyle={styles.letterView}
-                letterTextStyle={styles.letterText}
-            />
+          <SectionListContacts
+            sectionListData={dataArray}
+            initialNumToRender={dataArray.length}
+            otherAlphabet="#"
+            renderHeader={_renderHeader}
+            renderItem={_renderItem}
+            letterViewStyle={styles.letterView}
+            letterTextStyle={styles.letterText}
+          />
         </View>
       </View>
     );
