@@ -41,13 +41,18 @@ export default function ContactList(props) {
           const { status } = await Contacts.requestPermissionsAsync();
           if (status === "granted") {
             const { data } = await Contacts.getContactsAsync({
-              fields: [ Contacts.Fields.FirstName, Contacts.Fields.LastName/* , Contacts.Fields.PhoneNumbers */]
+              fields: [ Contacts.Fields.FirstName, Contacts.Fields.LastName, Contacts.Fields.PhoneNumbers]
             });
-    
+
             if (data.length > 0) {
               data.forEach(element => {
                 element["firstname"] = element["firstName"];
                 element["lastname"] = element["lastName"];
+                if (element.phoneNumbers === undefined) {
+                    element["phone"] = "Sin teléfono";
+                } else {
+                    element["phone"] = element.phoneNumbers[0].number;   
+                }
               });
               setDataArray(data);
               setIsReady(true);
@@ -132,7 +137,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
       },
       groupsText: {
-        fontFamily: 'SFProText-Regular',
+        fontFamily: 'normal',
         fontSize: 17,
         color: '#0A84FF',
         letterSpacing: -0.41,
@@ -164,7 +169,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
       },
       inputText: {
-        fontFamily: 'SFProText-Regular',
+        fontFamily: 'normal',
         fontSize: 17,
         color: '#8E8E93',
         letterSpacing: -0.41,
@@ -182,7 +187,7 @@ const styles = StyleSheet.create({
         letterSpacing: 0.38,
       },
       introText: {
-        fontFamily: 'SFProText-Regular',
+        fontFamily: 'normal',
         fontSize: 13,
         color: '#FFFFFF',
         letterSpacing: 0.38,
@@ -212,7 +217,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
       },
       itemFirstName: {
-        fontFamily: 'SFProText-Regular',
+        fontFamily: 'normal',
         fontSize: 17,
         color: '#FFFFFF',
       },

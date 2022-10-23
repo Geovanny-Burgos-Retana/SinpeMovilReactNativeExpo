@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
       },
       groupsText: {
-        fontFamily: 'SFProText-Regular',
+        fontFamily: 'normal',
         fontSize: 17,
         color: '#0A84FF',
         letterSpacing: -0.41,
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
       },
       inputText: {
-        fontFamily: 'SFProText-Regular',
+        fontFamily: 'normal',
         fontSize: 17,
         color: '#8E8E93',
         letterSpacing: -0.41,
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
         letterSpacing: 0.38,
       },
       introText: {
-        fontFamily: 'SFProText-Regular',
+        fontFamily: 'normal',
         fontSize: 13,
         color: '#FFFFFF',
         letterSpacing: 0.38,
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
       },
       itemFirstName: {
-        fontFamily: 'SFProText-Regular',
+        fontFamily: 'normal',
         fontSize: 17,
         color: '#FFFFFF',
       },
