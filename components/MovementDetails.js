@@ -1,8 +1,11 @@
 import { StyleSheet, View, Text, Button, TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import moment from "moment";
+import 'moment/locale/es';
 
 export default function MovementDetails(props) {
-    console.log('props MovementDetails is: ', JSON.stringify(props, null, 4));
+    moment.locale('es');
+    console.log((moment(new Date(props.route.params.movement.createdAt)).format("d MMMM yyyy, HH:mm a")).toString().replace(/\s/, ' de '));
 
     return (
         <View>
@@ -13,7 +16,7 @@ export default function MovementDetails(props) {
             <Text style={styles.amount}>₡{parseInt(props.route.params.movement.amount).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</Text>
             <View style={styles.container}>
                 <Text style={styles.dateTitle}>Fecha</Text>
-                <Text style={styles.date}>{props.route.params.movement.createdAt}</Text>
+                <Text style={styles.date}>{(moment(new Date(props.route.params.movement.createdAt)).format("d MMMM yyyy, HH:mm a")).toString().replace(/\s/, ' de ')}</Text>
                 <Text style={styles.dateTitle}>Descripción</Text>
                 <Text style={styles.date}>Fiesta de Hallowink</Text>
                 <Text style={styles.dateTitle}>Tipo de movimiento</Text>

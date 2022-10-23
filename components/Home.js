@@ -66,7 +66,7 @@ export default function Home(props) {
         </Text>
         <Button
           title="Make Sinpe!!"
-          onPress={<Text></Text>}
+          onPress={() => props.navigation.navigate('Contacts')}
         />
       </View>
       <Movements movements={data.account.banking_movements} navigation={props.navigation}></Movements>
