@@ -5,7 +5,7 @@ import 'moment/locale/es';
 
 export default function MovementDetails(props) {
     moment.locale('es');
-    console.log((moment(new Date(props.route.params.movement.createdAt)).format("d MMMM yyyy, HH:mm a")).toString().replace(/\s/, ' de '));
+    // console.log((moment(new Date(props.route.params.movement.createdAt)).format("d MMMM yyyy, HH:mm a")).toString().replace(/\s/, ' de '));
 
     return (
         <View>

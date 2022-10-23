@@ -70,12 +70,15 @@ export default function ContactList(props) {
     
     const  _renderItem = (item, index, section) => {
         return (
-          <View style={styles.itemView}>
-            <View style={styles.itemTextView}>
-              <Text style={styles.itemFirstName}>{item.firstname}</Text>
-              <Text style={styles.itemLastName}>{item.lastname}</Text>
-            </View>
-          </View>
+            <TouchableHighlight onPress={() => props.navigation.navigate('CreateMovement', { contact: item, navigation: props.navigation })}>
+                <View style={styles.itemView}>
+                    <View style={styles.itemTextView}>
+                        <Text style={styles.itemFirstName}>{item.firstname}</Text>
+                        <Text style={styles.itemLastName}>{item.lastname}</Text>
+                    </View>
+                </View>
+            </TouchableHighlight>
+          
         );
       };
 
@@ -103,11 +106,9 @@ export default function ContactList(props) {
             <SectionListContacts
                 sectionListData={dataArray}
                 initialNumToRender={dataArray.length}
-                SectionListClickCallback={() => props.navigation.navigate('CreateMovement')}
+                SectionListClickCallback={(item, index, section) => props.navigation.navigate('CreateMovement', { contact: item })}
                 showAlphabet={false}
                 otherAlphabet="#"
-                renderHeader={_renderHeader}
-                renderItem={_renderItem}
                 letterViewStyle={styles.letterView}
                 letterTextStyle={styles.letterText}
             />
