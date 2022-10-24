@@ -72,9 +72,11 @@ export default function Movements(props) {
 
 const styles = StyleSheet.create({
     container: {
+        position: "absolute",
         width: 375,
-        height: 270,
-        top: 214
+        height: 362,
+        left: 0,
+        top: 314
     },
     container2: {
         padding: 10
