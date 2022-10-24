@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, Image, TextInput, TouchableHighlight } from 're
 import SectionListContacts from 'react-native-sectionlist-contacts';
 import * as Contacts from 'expo-contacts';
 import EnterpriseStyles from './common/EnterpriseStyles';
-
+import { AntDesign } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function ContactList(props) {
     const [dataArray, setDataArray] = useState([/* {
@@ -55,9 +56,7 @@ export default function ContactList(props) {
                     element["phone"] = element.phoneNumbers[0].number;   
                 }
               });
-              console.log('result is: ', JSON.stringify(data, null, 4));
               setDataArray(data);
-              setIsReady(true);
             } else {
               setError("No contacts found");
             }
@@ -78,16 +77,19 @@ export default function ContactList(props) {
     const _renderItem = (item, index, section) => {
         return (
             <TouchableHighlight onPress={() => props.navigation.navigate('CreateMovement', { contact: item, navigation: props.navigation })}>
-                <View style={styles.contact}>
-                    <View style={styles.user}>
-                        <View style={EnterpriseStyles.enterpriseOval}>
-                            <Text style={EnterpriseStyles.enterpriseInitials}>{item.firstName === undefined ? 'N/A' : (item.firstName[0] + (item.lastName === undefined ? '' : item.lastName[0]))}</Text>
+                <View style={styles.boxContact}>
+                    <View style={styles.contact}>
+                        <View style={styles.user}>
+                            <View style={EnterpriseStyles.enterpriseOval}>
+                                <Text style={EnterpriseStyles.enterpriseInitials}>{item.firstName === undefined ? 'N/A' : (item.firstName[0] + (item.lastName === undefined ? '' : item.lastName[0]))}</Text>
+                            </View>
+                        </View>
+                        <View style={styles.information}>
+                            <Text style={styles.name}>{item.name}</Text>
+                            <Text style={styles.phone}>{item.phone}</Text>
                         </View>
                     </View>
-                    <View style={styles.information}>
-                        <Text style={styles.name}>{item.name}</Text>
-                        <Text style={styles.phone}>{item.phone}</Text>
-                    </View>
+                    <AntDesign style={styles.arrow} name="right" size={20} color="black" />
                 </View>
             </TouchableHighlight>
           
@@ -97,17 +99,16 @@ export default function ContactList(props) {
     
 
     return (
-    <View style={styles.container}>
-        <View style={{ height: 65, backgroundColor: '#161616' }}>
-            <View style={styles.searchBox}>
-                <Image
-                    source={require('../assets/Search.png')}
-                    style={{ marginLeft: 7, marginRight: 7 }}
-                />
-                <TextInput
-                    placeholder="Search"
+    <View style={EnterpriseStyles.enterpriseScreen}>
+        <View style={styles.searchBox}>
+            <View style={styles.searchBoxBox}>
+                <View>
+                    <Ionicons name="md-search-sharp" size={20} color="blue" margin="10"/>
+                </View>
+                <TextInput 
+                    placeholder="Buscá por nombre o número"
                     placeholderTextColor="#8E8E93"
-                    style={styles.inputText}
+                    style={styles.searchInput}
                     returnKeyType="search"
                     keyboardAppearance="dark"
                     onChangeText={(text) => {}}
@@ -135,47 +136,77 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#FFFFFF',
+        top: 80
       },
-      headerView: {
-        height: 44,
-        marginTop: 44,
-        marginLeft: 16,
-        marginRight: 16,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+      image: {
+        position: "absolute",
+        left: 14,
+        right: 15,
+        top: 14,
+        bottom: 15
       },
-      groupsText: {
-        fontFamily: 'normal',
-        fontSize: 17,
-        color: '#0A84FF',
-        letterSpacing: -0.41,
-        lineHeight: 22,
+      searchImage: {
+        width: 24,
+        height: 24,
+
+        flex: 0,
+        flexGrow: 0
       },
-      headerContactsView: {
-        height: 41,
-        marginTop: 12,
-        marginLeft: 16,
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-      },
-      headerContacts: {
-        fontFamily: 'SFProDisplay-Bold',
-        fontSize: 34,
-        color: '#FFFFFF',
-        letterSpacing: -0.41,
-        lineHeight: 41,
-      },
+      searchInput: {
+        width: 279,
+        height: 19,
+        left: 10,
+
+        /* Body/Regular */
+
+        fontFamily: "normal",
+        fontStyle: "normal",
+        fontWeight: "400",
+        fontSize: 14,
+        lineHeight: 19,
+
+        color: "#787878",
+
+        flex: 0,
+        flexGrow: 1,
+      },      
       searchBox: {
-        marginTop: 12,
-        height: 37,
-        marginLeft: 16,
-        marginRight: 16,
-        borderRadius: 10,
-        backgroundColor: '#2C2C2E',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: 'center',
+        alignItems: "flex-start",
+        padding: 0,
+
+        position: 'absolute',
+        width: 343,
+        height: 48,
+        left: 16,
+        top: 20
+      },
+      searchBoxBox: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 12,
+
+        width: 330,
+        height: 48,
+
+        /* Neutral/100 */
+
+        background: "#FFFFFF",
+        /* Neutral/400 */
+
+        /* border: 1px solid #CECECE; */
+        borderWidth: 1,
+        borderColor: "#CECECE",
+        borderRadius: 24,
+
+        /* Inside auto layout */
+
+        flex: 0,
+        alignSelf: "stretch",
+        flexGrow: 0
       },
       inputText: {
         fontFamily: 'normal',
@@ -183,24 +214,6 @@ const styles = StyleSheet.create({
         color: '#8E8E93',
         letterSpacing: -0.41,
         lineHeight: 22,
-      },
-      avatar: {
-        marginTop: 10,
-        marginBottom: 10,
-        marginLeft: 16,
-      },
-      accountText: {
-        fontFamily: 'SFProDisplay-Semibold',
-        fontSize: 20,
-        color: '#FFFFFF',
-        letterSpacing: 0.38,
-      },
-      introText: {
-        fontFamily: 'normal',
-        fontSize: 13,
-        color: '#FFFFFF',
-        letterSpacing: 0.38,
-        lineHeight: 18,
       },
       sectionView: {
         height: 28,
@@ -214,11 +227,6 @@ const styles = StyleSheet.create({
         borderRightColor: "#FFFFFF",
         borderRadius: 4,
         margin: 10
-      },
-      sectionView2: {
-        padding:16,
-        borderWidth: 1,
-        borderTopColor: "#4C51F7"
       },
       sectionText: {
         position: "absolute",
@@ -235,38 +243,30 @@ const styles = StyleSheet.create({
 
         color: "#4C51F7"
       },
-      itemView: {
-        height: 44,
-        backgroundColor: 'rgba(22,22,22,0.75)',
-      },
-      itemTextView: {
-        height: 44,
-        marginLeft: 16,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-      },
-      itemFirstName: {
-        fontFamily: 'normal',
-        fontSize: 17,
-        color: '#FFFFFF',
-      },
-      itemLastName: {
-        marginLeft: 5,
-        fontFamily: 'SFProText-Semibold',
-        fontSize: 17,
-        color: '#FFFFFF',
-      },
       letterText: {
         fontFamily: 'SFProText-Semibold',
         fontSize: 11,
         color: '#007AFF',
       },
-    contact: {
+    boxContact: {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        padding: 16
+        padding: 16,
+
+        flex: 0,
+        order: 0,
+        alignSelf: "stretch",
+        flexGrow: 0
+    },
+    contact: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    arrow: {
+        color: "#4C51F7",
+        right: 20
     },
     user: {
         width: 48,

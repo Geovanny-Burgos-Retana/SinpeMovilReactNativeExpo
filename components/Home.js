@@ -2,7 +2,6 @@ import { StatusBar, View, Text, StyleSheet, Button } from "react-native";
 import Movements from "./Movements";
 import React, { useState, useEffect } from "react";
 import AppLoading from 'expo-app-loading';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 export default function Home(props) {
   const [data, setData] = useState();
@@ -62,9 +61,6 @@ export default function Home(props) {
           title="Make Sinpe!!"
           onPress={() => props.navigation.navigate('Contacts')}
         />
-        <View>
-          <FontAwesomeIcon icon="fa-arrows-repeat"/>
-        </View>
         <Text style={styles.sinpeMovil}>
           SINPE
           móvil
