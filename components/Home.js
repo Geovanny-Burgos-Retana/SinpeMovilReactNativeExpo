@@ -2,6 +2,8 @@ import { StatusBar, View, Text, StyleSheet, Button } from "react-native";
 import Movements from "./Movements";
 import React, { useState, useEffect } from "react";
 import AppLoading from 'expo-app-loading';
+import { Entypo } from '@expo/vector-icons';
+import EnterpriseStyles from "./common/EnterpriseStyles";
 
 export default function Home(props) {
   const [data, setData] = useState();
@@ -50,17 +52,16 @@ export default function Home(props) {
   }
 
   return (
-    <View isReady = {false}>
+    <View style={EnterpriseStyles.enterpriseScreen} isReady = {false}>
       <StatusBar></StatusBar>
       <Text style={styles.wallet}>Cuenta Colones</Text>
       <Text style={styles.balance}>Saldo disponible</Text>
       <Text style={styles.amount}>₡{parseInt(data.account.amount).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</Text>
       <Text style={styles.whatDo}>¿Qué querés hacer?</Text>
       <View style={styles.viewSinpe}>
-        <Button
-          title="Make Sinpe!!"
-          onPress={() => props.navigation.navigate('Contacts')}
-        />
+        <View style={styles.boxIconSinpeMovil}>
+          <Entypo name="cycle" size={30} color="#4C51F7" onPress={() => props.navigation.navigate('Contacts')}/>
+        </View>
         <Text style={styles.sinpeMovil}>
           SINPE
           móvil
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
     width: 360,
     height: 50,
     left: 16,
-    top: 35,
+    top: 15,
 
     fontSize: 32,
     color: "#4C51F7",
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
     width: 360,
     height: 16,
     left: 16,
-    top: 90,
+    top: 70,
 
     fontSize: 12,
     color: "#3E3E3E"
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
     width: 360,
     height: 42,
     left: 16,
-    top: 120,
+    top: 100,
 
     fontSize: 32,
     color: "#3E3E3E",
@@ -130,7 +131,25 @@ const styles = StyleSheet.create({
     width: 64,
     height: 96,
     left: 156,
-    top: 220,
+    top: 200,
+  },
+  boxIconSinpeMovil: {
+    width: 56,
+    height: 56,
+
+    flex: 0,
+    flexGrow: 0,
+
+    borderWidth: 1,
+    borderColor: "#DBDBDB",
+    borderRadius: 28,
+    borderTopColor: "#FFFFFF",
+    borderLeftColor: "#FFFFFF",
+    borderRightColor: "#FFFFFF",
+    shadowRadius: 5,
+
+    alignItems: "center",
+    marginBottom: 5
   },
   sinpeMovil: {
     width: 64,
