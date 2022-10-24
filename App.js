@@ -1,4 +1,4 @@
-import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { NavigationContainer, View, Image } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ContactList from './components/ContactList';
 import CreateMovement from './components/CreateMovement';
@@ -10,7 +10,11 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerTintColor: '#4C51F7'
+        }}
+      >
         <Stack.Screen
           name='Home'
           component={Home}
