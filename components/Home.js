@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import AppLoading from 'expo-app-loading';
 import { Entypo } from '@expo/vector-icons';
 import EnterpriseStyles from "./common/EnterpriseStyles";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function Home(props) {
   const [data, setData] = useState();
@@ -36,6 +37,18 @@ export default function Home(props) {
     }
     return Promise.all(jsonResponse);
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setIsReady(false);
+      const loadResources = async () => {
+        await fetchApiAccount();
+        setIsReady(true);
+      };
+  
+      loadResources();
+    }, [])
+  );
 
   useEffect(() => {
     const loadResources = async () => {
@@ -99,7 +112,7 @@ const styles = StyleSheet.create({
     width: 360,
     height: 42,
     left: 16,
-    top: 100,
+    top: 95,
 
     fontSize: 32,
     color: "#3E3E3E",
@@ -110,7 +123,7 @@ const styles = StyleSheet.create({
     width: 360,
     height: 16,
     left: 16,
-    top: 180,
+    top: 160,
 
     fontFamily: "normal",
     fontStyle: "normal",
@@ -136,6 +149,7 @@ const styles = StyleSheet.create({
   boxIconSinpeMovil: {
     width: 56,
     height: 56,
+    paddingTop: 10,
 
     flex: 0,
     flexGrow: 0,
@@ -146,7 +160,7 @@ const styles = StyleSheet.create({
     borderTopColor: "#FFFFFF",
     borderLeftColor: "#FFFFFF",
     borderRightColor: "#FFFFFF",
-    shadowRadius: 5,
+    shadowRadius: 1,
 
     alignItems: "center",
     marginBottom: 5

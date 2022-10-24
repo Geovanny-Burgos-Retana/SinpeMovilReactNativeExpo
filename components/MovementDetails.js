@@ -20,11 +20,11 @@ export default function MovementDetails(props) {
             <View style={styles.details}>
                 <View style={styles.viewDateDescripType}>
                     <Text style={[styles.dateTitle, EnterpriseStyles.captionRegular]}>Fecha</Text>
-                    <Text style={[styles.date, EnterpriseStyles.bodyRegular]}>{(moment(new Date(props.route.params.movement.createdAt)).format("d MMMM yyyy, HH:mm a")).toString().replace(/\s/, ' de ')}</Text>
+                    <Text style={[styles.date, EnterpriseStyles.bodyRegular]}>{(moment(new Date(props.route.params.movement.createdAt)).format("D MMMM yyyy, HH:mm a")).toString().replace(/\s/, ' de ')}</Text>
                 </View>
                 <View style={styles.viewDateDescripType}>
                     <Text style={[styles.dateTitle, EnterpriseStyles.captionRegular]}>Descripción</Text>
-                    <Text style={[styles.date, EnterpriseStyles.bodyRegular]}>Fiesta de Hallowink</Text>
+                    <Text style={[styles.date, EnterpriseStyles.bodyRegular]}>{props.route.params.movement.phoneTwo}</Text>
                 </View>
                 <View style={styles.viewDateDescripType}>
                     <Text style={[styles.dateTitle, EnterpriseStyles.captionRegular]}>Tipo de movimiento</Text>

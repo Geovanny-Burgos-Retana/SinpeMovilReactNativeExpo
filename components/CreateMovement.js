@@ -1,10 +1,53 @@
 import { StyleSheet, View, Text, TouchableOpacity, TextInput } from "react-native";
-import Icon from 'react-native-vector-icons/FontAwesome';
-import moment from "moment";
-import 'moment/locale/es';
 import EnterpriseStyles from "./common/EnterpriseStyles";
+import React, { useState } from "react";
+
 
 export default function CreateMovement(props) {
+    const [text, onChangeText] = useState('');
+    const [number, onChangeNumber] = useState(null);
+
+
+    const createMovement = () => {
+        if(validData()) {
+            const movement = {
+                idAccount: "8620317d-9051-4a2c-922c-cfbeabbcf768",
+                contact: props.route.params.contact.name, 
+                phone: props.route.params.contact.phone,
+                amount: parseInt(number),
+                phoneTwo: text.trim()
+            }
+            return fetch('https://ucszxe1fz2.execute-api.us-west-2.amazonaws.com/movement', {
+                method: 'POST',
+                headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(movement)
+            })
+            .then((response) => response.json())
+            .then((json) => {
+                console.log(json);
+                return (props.navigation.navigate('Home'));
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        } else {
+            console.log("No valido");
+        }
+    };
+
+    const validData = () => {
+        var amount = parseInt(number);
+        var description = text.toString();
+        if(amount != null && amount > 0 && description.trim() != '') {
+            return true;
+        }
+        return false;
+    }
+
+
     return (
         <View style={EnterpriseStyles.enterpriseScreen}>
             <Text style={styles.transfer}>Transferir a</Text>
@@ -22,16 +65,24 @@ export default function CreateMovement(props) {
             <View style={styles.view_box_amount}>
                 <Text style={styles.titleAmount}>Monto</Text>
                 <View style={styles.inputBoxAmount}>
-                    <TextInput style={[styles.inputAmount, EnterpriseStyles.bodyRegular]}></TextInput>
+                    <TextInput 
+                        onChangeText={onChangeNumber}
+                        value={number}
+                        style={[styles.inputAmount, EnterpriseStyles.bodyRegular]}>
+                    </TextInput>
                 </View>
             </View>
             <View style={styles.input_box_detail}>
                 <Text style={styles.titleAmount}>Detalle</Text>
                 <View style={styles.inputBoxAmount}>
-                    <TextInput style={[styles.inputAmount, EnterpriseStyles.bodyRegular]}></TextInput>
+                    <TextInput 
+                        onChangeText={onChangeText}
+                        value={text}
+                        style={[styles.inputAmount, EnterpriseStyles.bodyRegular]}>
+                    </TextInput>
                 </View>
             </View>
-            <TouchableOpacity onPress={() => props.navigation.navigate('Home')} style={EnterpriseStyles.enterpriseButton}>
+            <TouchableOpacity onPress={() => {createMovement()}} style={EnterpriseStyles.enterpriseButton}>
                 <Text style={styles.backText}>Confirmar</Text>
             </TouchableOpacity>
         </View>

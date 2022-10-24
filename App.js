@@ -15,11 +15,17 @@ export default function App() {
           name='Home'
           component={Home}
           options={{ title: 'Wink' }}
+          listeners={{
+            tabPress: (e) => {
+              // Prevent default action
+              e.preventDefault();
+            },
+          }}
         />
         <Stack.Screen
           name='MovementDetails'
           component={MovementDetails}
-          options={{ title: 'Detalle de movimiento' }}
+          options={{ title: 'Detalle de movimiento'}}
         />
         <Stack.Screen
           name='Contacts'
