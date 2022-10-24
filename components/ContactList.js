@@ -7,36 +7,8 @@ import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function ContactList(props) {
-    const [dataArray, setDataArray] = useState([/* {
-            "lookupKey": "2375i5aef24c28cb4a1be.3789r596-293F53294B45294B295929414545533943.2399r603-293F53294B45294B295929414545533943",
-            "firstname": "Álvaro",
-            "name": "Alvaro Araya Moovin",
-            "id": "597",
-            "imageAvailable": false,
-            "middleName": "Araya",
-            "contactType": "person",
-            "lastname": "Moovin"
-        },
-        {
-            "lookupKey": "2375i24173f8d8b44c3c7.3789r646-2D294B3F394337454D2D452D",
-            "firstname": "☆Carlinhos☆ ⚔️",
-            "name": "☆Carlinhos☆ ⚔️ COC ⚔️",
-            "id": "648",
-            "imageAvailable": false,
-            "middleName": "COC",
-            "contactType": "person",
-            "lastname": "⚔️"
-        },
-        {
-            "lookupKey": "2375i7101182e0ec79e5d.3789r616-3D31593F454B2D452D",
-            "firstname": "🍃Keylor🍃",
-            "name": "🍃Keylor🍃 COC",
-            "id": "617",
-            "imageAvailable": false,
-            "contactType": "person",
-            "lastname": "COC"
-        } */
-    ]);
+    const [dataArray, setDataArray] = useState([]);
+    const [dataFilterArray, setDataFilterArray] = useState([]);
 
     useEffect(() => {
         (async () => {
@@ -57,6 +29,7 @@ export default function ContactList(props) {
                 }
               });
               setDataArray(data);
+              setDataFilterArray(data);
             } else {
               setError("No contacts found");
             }
@@ -96,7 +69,19 @@ export default function ContactList(props) {
         );
       };
 
-    
+    const searchFilterFuntion = (filter) => {
+      if(filter) {
+        const newData = dataArray.filter(item => {
+          const itemName = item.name ? item.name.toUpperCase() : '';
+          const itemPhone = item.phone ? item.phone.toUpperCase() : '';
+          const filterData = filter.toUpperCase();
+          return (itemName.indexOf(filterData) > -1) || (itemPhone.indexOf(filterData) > -1);
+        });
+        setDataFilterArray(newData);
+      } else {
+        setDataFilterArray(dataArray);
+      }
+    }
 
     return (
     <View style={EnterpriseStyles.enterpriseScreen}>
@@ -111,14 +96,14 @@ export default function ContactList(props) {
                     style={styles.searchInput}
                     returnKeyType="search"
                     keyboardAppearance="dark"
-                    onChangeText={(text) => {}}
+                    onChangeText={(event) => {searchFilterFuntion(event)}}
                 ></TextInput>
             </View>
         </View>
         <View style={styles.container}>
             <SectionListContacts
-                sectionListData={dataArray}
-                initialNumToRender={dataArray.length}
+                sectionListData={dataFilterArray}
+                initialNumToRender={dataFilterArray.length}
                 SectionListClickCallback={(item, index, section) => props.navigation.navigate('CreateMovement', { contact: item })}
                 showAlphabet={false}
                 otherAlphabet="#"

@@ -27,7 +27,6 @@ export default function CreateMovement(props) {
             })
             .then((response) => response.json())
             .then((json) => {
-                console.log(json);
                 return (props.navigation.navigate('Home'));
             })
             .catch((error) => {
