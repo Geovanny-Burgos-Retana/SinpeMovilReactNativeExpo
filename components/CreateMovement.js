@@ -5,14 +5,13 @@ import 'moment/locale/es';
 import EnterpriseStyles from "./common/EnterpriseStyles";
 
 export default function CreateMovement(props) {
-    console.log('result is: ', JSON.stringify(props, null, 4));
     return (
         <View style={EnterpriseStyles.enterpriseScreen}>
             <Text style={styles.transfer}>Transferir a</Text>
             <View style={styles.contact}>
                 <View style={styles.user}>
                     <View style={EnterpriseStyles.enterpriseOval}>
-                        <Text style={EnterpriseStyles.enterpriseInitials}>CN</Text>
+                        <Text style={EnterpriseStyles.enterpriseInitials}>{props.route.params.contact.firstname[0]+props.route.params.contact.lastname[0]}</Text>
                     </View>
                 </View>
                 <View style={styles.information}>

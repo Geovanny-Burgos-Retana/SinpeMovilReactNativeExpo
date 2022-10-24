@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Image, TextInput, TouchableHighlight } from 'react-native';
 import SectionListContacts from 'react-native-sectionlist-contacts';
 import * as Contacts from 'expo-contacts';
+import EnterpriseStyles from './common/EnterpriseStyles';
 
 
 export default function ContactList(props) {
@@ -54,6 +55,7 @@ export default function ContactList(props) {
                     element["phone"] = element.phoneNumbers[0].number;   
                 }
               });
+              console.log('result is: ', JSON.stringify(data, null, 4));
               setDataArray(data);
               setIsReady(true);
             } else {
@@ -73,13 +75,18 @@ export default function ContactList(props) {
         );
       };
     
-    const  _renderItem = (item, index, section) => {
+    const _renderItem = (item, index, section) => {
         return (
             <TouchableHighlight onPress={() => props.navigation.navigate('CreateMovement', { contact: item, navigation: props.navigation })}>
-                <View style={styles.itemView}>
-                    <View style={styles.itemTextView}>
-                        <Text style={styles.itemFirstName}>{item.firstname}</Text>
-                        <Text style={styles.itemLastName}>{item.lastname}</Text>
+                <View style={styles.contact}>
+                    <View style={styles.user}>
+                        <View style={EnterpriseStyles.enterpriseOval}>
+                            <Text style={EnterpriseStyles.enterpriseInitials}>{item.firstName === undefined ? 'N/A' : (item.firstName[0] + (item.lastName === undefined ? '' : item.lastName[0]))}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.information}>
+                        <Text style={styles.name}>{item.name}</Text>
+                        <Text style={styles.phone}>{item.phone}</Text>
                     </View>
                 </View>
             </TouchableHighlight>
@@ -114,6 +121,8 @@ export default function ContactList(props) {
                 SectionListClickCallback={(item, index, section) => props.navigation.navigate('CreateMovement', { contact: item })}
                 showAlphabet={false}
                 otherAlphabet="#"
+                renderItem={_renderItem}
+                renderHeader={_renderHeader}
                 letterViewStyle={styles.letterView}
                 letterTextStyle={styles.letterText}
             />
@@ -125,7 +134,7 @@ export default function ContactList(props) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#000000',
+        backgroundColor: '#FFFFFF',
       },
       headerView: {
         height: 44,
@@ -195,15 +204,36 @@ const styles = StyleSheet.create({
       },
       sectionView: {
         height: 28,
-        backgroundColor: '#2C2C2E',
+        backgroundColor: '#FFFFFF',
         alignItems: 'flex-start',
         justifyContent: 'center',
+        borderWidth: 3,
+        borderTopColor: "#4C51F7",
+        borderBottomColor: "#FFFFFF",
+        borderLeftColor: "#FFFFFF",
+        borderRightColor: "#FFFFFF",
+        borderRadius: 4,
+        margin: 10
+      },
+      sectionView2: {
+        padding:16,
+        borderWidth: 1,
+        borderTopColor: "#4C51F7"
       },
       sectionText: {
-        marginLeft: 16,
-        fontFamily: 'SFProDisplay-Semibold',
-        fontSize: 17,
-        color: '#FFFFFF',
+        position: "absolute",
+        height: 16,
+        left: 16,
+        right: 16,
+        top: 8,
+
+        fontFamily: "normal",
+        fontStyle: "normal",
+        fontWeight: "400",
+        fontSize: 12,
+        lineHeight: 16,
+
+        color: "#4C51F7"
       },
       itemView: {
         height: 44,
@@ -232,4 +262,68 @@ const styles = StyleSheet.create({
         fontSize: 11,
         color: '#007AFF',
       },
+    contact: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 16
+    },
+    user: {
+        width: 48,
+        height: 48,
+
+        flex: 0,
+        flexGrow: 0
+    },
+    information: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        padding: 10,
+
+        /* width: 279,
+        height: 44, */
+
+        flex: 0,
+        flexGrow: 1
+    },
+    name: {
+        /* width: 279,
+        height: 24, */
+
+        fontFamily: "normal",
+        fontStyle: "normal",
+        fontWeight: "400",
+        fontSize: 14,
+        lineHeight: 19,
+
+        display: "flex",
+        alignItems: "center",
+
+        color: "#3E3E3E",
+
+        flex: 0,
+        alignSelf: "stretch",
+        flexGrow: 0,
+    },
+    phone: {
+        /* width: 279,
+        height: 16, */
+
+        fontFamily: "normal",
+        fontStyle: "normal",
+        fontWeight: "400",
+        fontSize: 12,
+        lineHeight: 16,
+
+        display: "flex",
+        alignItems: "center",
+
+        color: "#4C51F7",
+
+        flex: 0,
+        alignSelf: "stretch",
+        flexGrow: 0,
+    }
 });
